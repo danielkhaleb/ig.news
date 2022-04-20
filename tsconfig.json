@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/pages/slice-simulator.jsx", "src/services/prismic.js"  ],
   "exclude": [
     "node_modules"
   ]
