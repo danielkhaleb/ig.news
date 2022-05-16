@@ -12,6 +12,7 @@
   "dependencies": {
     "@prismicio/client": "^6.4.3",
     "@prismicio/helpers": "^2.3.0",
+    "@prismicio/next": "^0.1.2",
     "@prismicio/react": "^2.3.0",
     "@prismicio/slice-simulator-react": "^0.2.2",
     "@stripe/stripe-js": "^1.26.0",
@@ -23,7 +24,7 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "sass": "^1.49.9",
-    "stripe": "^8.207.0"
+    "stripe": "8.207.0"
   },
   "devDependencies": {
     "@types/next-auth": "^3.15.0",
