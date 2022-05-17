@@ -3,7 +3,18 @@ import Head from "next/head";
 import { createClient } from "../../services/prismic";
 import styles from "./styles.module.scss"
 
-export default function Posts() {
+type Post = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  updatedAt: string;
+}
+
+interface PostsProps {
+  posts: Post[]
+}
+
+export default function Posts({ posts }: PostsProps) {
   return (
     <>
       <Head>
@@ -12,11 +23,13 @@ export default function Posts() {
 
       <main className={styles.container}>
         <div className={styles.posts}>
-          <a href="#">
-            <time>12 de março de 2021</time>
-            <strong>Creating BLALBALBAB BLABLB LVBBa deass</strong>
-            <p>O Textp é chato jdsaodias asjdoaijd aojij oia</p>
+          { posts.map(post => (
+            <a key={post.slug} href="#">
+            <time>{post.updatedAt}</time>
+            <strong>{post.title}</strong>
+            <p>{post.excerpt}a</p>
           </a>
+          ))}
         </div>
       </main>
     </>
@@ -26,12 +39,24 @@ export default function Posts() {
 export const getStaticProps: GetStaticProps = async (previewData) => {
   const client = createClient({ previewData })
 
-  const page = await client.getAllByType('post', {
-    fetch: ['publication.title'],
+  const response = await client.getAllByType('post', {
     pageSize: 100,
   })
-  console.log(page)
+  console.log(response)
+  const posts = response.map(post => {
+    return {
+      slug: post.uid,
+      title: post.data.title[0].text, // is better to use prismic dom package
+      excerpt: post.data.Content.find(content => content.type === 'paragraph')?.text ?? '',
+      updateAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      })
+    }
+  })
+  console.log(posts)
   return {
-    props: { page }, // Will be passed to the page component as props
+    props: { posts }, // Will be passed to the page component as props
   }
 }
