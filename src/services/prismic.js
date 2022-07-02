@@ -26,8 +26,8 @@ export function createClient(config = {}) {
 
   enableAutoPreviews({
     client,
-    previewData: config.previewData,
-    req: config.req,
+    previewData: config?.previewData,
+    req: config?.req,
   })
 
   return client
